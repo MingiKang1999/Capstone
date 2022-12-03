@@ -1,3 +1,5 @@
+import {path} from "path";
+
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
@@ -37,10 +39,10 @@ app.use(`${api}/users`, usersRouter);
 app.use(`${api}/carts`, cartsRouter);
 app.use(`${api}/categories`, categoriesRouter);
 
-//const __dirname = path.resolve();
-//app.use(express.static(path.join(__dirname, "/frontend/build")));
-//app.get("*", (req, res) =>
-//res.sendFile(path.join(__dirname, "/frontend/build/index.html")));
+const __dirname = path.resolve();
+app.use(express.static(path.join(__dirname, "/frontend/build")));
+app.get("*", (req, res) =>
+res.sendFile(path.join(__dirname, "/frontend/build/index.html")));
 
 // Database connection MongoDB
 mongoose.connect(process.env.db_connection_string).then(() => {
