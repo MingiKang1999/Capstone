@@ -23,7 +23,7 @@ const categoriesRouter = require('./routers/categories');
 //Middleware
 app.use(bodyParser.json());
 app.use(morgan("tiny"));
-app.use(authJwt());
+//app.use(authJwt());
 try{
     app.use(errorHandler);
 }catch(err){
