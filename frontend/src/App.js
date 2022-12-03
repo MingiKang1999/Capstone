@@ -34,7 +34,7 @@ function App() {
             </Nav>
             <Nav className="me-auto">
               <Link to="/signin" className="nav-link">
-                Singin
+                Signin
               </Link>
             </Nav>
             <Nav className="me-auto">
