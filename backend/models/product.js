@@ -29,6 +29,7 @@ const productSchema = mongoose.Schema({
     },
     reviewedNumber: {
         type: Number,
+        max: 5,
         default: 0
     },
     featured: {

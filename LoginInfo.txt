@@ -1,0 +1,7 @@
+Admin
+email: admin@example.com
+password: AJTU1267@!
+
+Regular User
+email: normal@example.com
+password: SomethingRain2221@

@@ -7,13 +7,65 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-header {
-  background-color: darkolivegreen;
+.btn-primary{
+  background-color: darkkhaki;
+  color: black;
+}
+
+.rating span {
+  color: orange;
+}
+
+.site-container{
+  min-height: 100vh;
+}
+
+main {
+  flex: 1;
+}
+
+.products {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.small-container {
+  max-width: 600px;
+}
+
+.product {
+  border: 2px black solid;
+  margin: 1rem;
+}
+
+.product img {
+  width: 100%;
+  max-width: 400px;
+}
+
+.productInfo {
   padding: 1rem;
 }
 
-header a {
-  color:antiquewhite;
-  font-weight: bold;
-  text-decoration: none;
+.img-large {
+  max-width: 100%;
+}
+
+.img-thumbnail {
+  height: 80px;
+}
+
+.unavailable {
+  border-radius: 30%;
+  background-color: red;
+  text-align: center;
+  color:black;
+}
+
+.available {
+  border-radius: 30%;
+  background-color: aquamarine;
+  text-align: center;
+  color:black;
 }
