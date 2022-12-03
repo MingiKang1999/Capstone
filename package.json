@@ -10,12 +10,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/MingiKang1999/artsolid.git"
+    "url": "git+https://github.com/MingiKang1999/Capstone.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/MingiKang1999/artsolid /issues"
+    "url": "https://github.com/MingiKang1999/Capstone/issues"
   },
-  "homepage": "https://github.com/MingiKang1999/artsolid#readme"
+  "homepage": "https://github.com/MingiKang1999/Capstone#readme"
 }
