@@ -1,4 +1,4 @@
-import Axios from "axios";
+import axios from "axios";
 import { Link, useLocation, useNavigate} from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
@@ -12,15 +12,16 @@ export default function SigninScreen(){
     const { search } = useLocation();
     const redirectInUrl = new URLSearchParams(search).get("redirect");
     const redirect = redirectInUrl ? redirectInUrl : "/";
+
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    const { state, dispatch: ctxDispatch } = useContext(Store);
+    const {dispatch: ctxDispatch } = useContext(Store);
     
     const submitHandler = async (e) => {
-        e.preventDefualt();
+        e.preventDefault();
         try {
-            const { data } = await Axios.post("/api/v1/users/login", {
+            const { data } = await axios.post("/api/v1/users/login", {
                 email,
                 password,
             });
@@ -50,10 +51,10 @@ export default function SigninScreen(){
                     </Form.Label>
                     <Form.Control type="password" required onChange={(e) => setPassword(e.target.value)}/>
                 </Form.Group>
-                <div class="mb-3">
+                <div className="mb-3">
                     <Button type="submit">Sign In</Button>
                 </div>
-                <div class="mb-3">
+                <div className="mb-3">
                     New User?{" "}
                     <Link to={`signup?redirect=${redirect}`}>Create New Account</Link>
                 </div>

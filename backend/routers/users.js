@@ -4,6 +4,7 @@ const router = express.Router();
 const bcrypt = require("bcryptjs");
 var mongoose = require('mongoose');
 const jwt = require("jsonwebtoken");
+const expressAsyncHandler = require("express-async-handler");
 
 router.get("/:userId", async(req, res) =>{
     if (mongoose.Types.ObjectId.isValid(req.params.userId)) {
@@ -47,7 +48,7 @@ router.post("/", async (req, res) =>{
     res.send(user);
 })
 
-router.post("/login", async (req, res) => {
+router.post("/login", expressAsyncHandler (async(req, res) => {
     const user = await User.findOne({email: req.body.email});
     const secret = process.env.secret;
     if(!user){
@@ -63,12 +64,13 @@ router.post("/login", async (req, res) => {
                 {expiresIn: "1d"}
             )
 
-            res.status(200).send({user: user.email, token: token});
+            res.send({user: user.email, token: token});
+            return;
         }else{
             res.status(400).send("Incorrect Password Entered");
         }
     }
-})
+}))
 
 router.post("/register", async (req, res) =>{
     let user = new User({

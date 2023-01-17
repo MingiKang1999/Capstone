@@ -8,9 +8,10 @@ import { Store } from "../Store";
 
 function Product(props) {
     const {product} = props;
-    const {state, dispatch: ctxDispatch} = useContext(Store);
+    const {dispatch: ctxDispatch} = useContext(Store);
     const addToCartHandler = () => {
         ctxDispatch({type:"CART_ADD_ITEM", payload: {...product, quantity: 1}})
+        document.getElementById(product.title).disabled = true;
     }
     return (
         <Card>
@@ -25,7 +26,7 @@ function Product(props) {
             </Link>
             <Rating rating={product.rating} numReviews={product.reviewedNumber}/>
             <Card.Text>${product.price}</Card.Text>
-            <Button onClick={addToCartHandler}variant="primary">Add to Cart</Button>
+            <Button id={`${product.title}`} onClick={addToCartHandler}variant="primary">Add to Cart</Button>
         </Card.Body>
     </Card>
     );

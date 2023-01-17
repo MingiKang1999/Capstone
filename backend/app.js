@@ -12,6 +12,9 @@ require("dotenv/config");
 app.use(cors());
 app.options("*", cors());
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true}));
+
 const api = process.env.API_URL;
 
 //Routers locate

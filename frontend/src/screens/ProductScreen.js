@@ -48,7 +48,7 @@ function ProductScreen(){
         };
         fetchData();
     }, [slug]);
-    const {state, dispatch: ctxDispatch} = useContext(Store);
+    const {dispatch: ctxDispatch} = useContext(Store);
     
     const addToCartHandler = () => {
         ctxDispatch({type:"CART_ADD_ITEM", payload: {...product, quantity: 1}});
@@ -108,7 +108,7 @@ function ProductScreen(){
                                 {product.available > 0 && (
                                     <ListGroup.Item>
                                         <div className="d-grid">
-                                            <Button onClick={addToCartHandler}variant="primary">
+                                            <Button id="add2" onClick={addToCartHandler}variant="primary">
                                                 Add to Cart
                                             </Button>
                                         </div>
