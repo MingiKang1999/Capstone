@@ -19,6 +19,7 @@ import ShippingScreen from "./screens/ShippingScreen";
 import PaymentMethodScreen from "./screens/PaymentMethodScreen";
 import PlaceOrderScreen from "./screens/PlaceOrderScreen";
 import ProfileScreen from "./screens/ProfileScreen";
+import AdminProductScreen from "./screens/AdminProductScreen";
 import Button from "react-bootstrap/Button";
 import { getError } from "./utils";
 import axios from "axios";
@@ -94,7 +95,7 @@ useEffect(() => {
                   <LinkContainer to="/dashboard">
                     <NavDropdown.Item>Dashboard</NavDropdown.Item>
                   </LinkContainer>
-                  <LinkContainer to="/product">
+                  <LinkContainer to="/admin_product">
                     <NavDropdown.Item>Products</NavDropdown.Item>
                   </LinkContainer>
                 </NavDropdown>
@@ -140,6 +141,7 @@ useEffect(() => {
             <Route path="/placeorder" element={<PlaceOrderScreen/>}/>
             <Route path="/signup" element={<SignupScreen/>}/>
             <Route path="/profile" element={<ProfileScreen/>}/>
+            <Route path="/admin_product" element={<AdminProductScreen/>}/>
             <Route path="/about" element={<AboutScreen/>}/>
             <Route path="/" element={<HomeScreen/>}/>
           </Routes>
