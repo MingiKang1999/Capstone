@@ -11,6 +11,7 @@ function Product(props) {
     const {dispatch: ctxDispatch} = useContext(Store);
     const addToCartHandler = () => {
         ctxDispatch({type:"CART_ADD_ITEM", payload: {...product, quantity: 1}})
+        localStorage.setItem("cartItems", JSON.stringify(product));
         document.getElementById(product.title).disabled = true;
     }
     return (

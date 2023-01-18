@@ -69,3 +69,38 @@ main {
   text-align: center;
   color:black;
 }
+
+.checkout-steps > div {
+  border-bottom: 0.3rem solid gray;
+  color: gray;
+}
+
+.checkout-steps > div.active {
+  border-bottom: 0.3rem solid orange;
+  color: orange;
+}
+
+.navbar-brand {
+  font-weight: bold;
+}
+
+.side-navbar {
+  width: 250px;
+  height: 100%;
+  position: absolute;
+  left: -300px;
+  background-color: grey;
+  transition: 0.4s;
+}
+
+.side-container {
+  transition: 0.3s;
+}
+
+.active-cont {
+  margin-left: 250px;
+}
+
+.active-nav {
+  left: 0;
+}

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<head>
+  <title>PayPal Screen</title>
+  <a href="/">Click Here and return to Home Page</a>
+  <script src="https://www.paypal.com/sdk/js?currency=CAD&client-id=Aadk3LsfsTvsC-nHgRcbPZgQDsb7ql4P_uedqm798f54kgBYGUAf3jgftNefzy5g4yRUQhpzlksCzMU0"></script>
+  <script>
+  window.addEventListener("load", function () {
+
+    // initially hide the order confirmation details and confirm button
+    document.getElementById("order_details").style = "display: none";
+
+    // renders the paypal buttons in the div with id #paypal
+    paypal
+      .Buttons({
+
+        // makes an AJAX request to the backend to create the order
+        createOrder: function () {
+          return fetch("/create-order", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            // we could send data about the items being purchased as JSON data 
+            // here, and the backend could figure out the price and what is 
+            // being purchaed based on this
+            body: JSON.stringify({ }),
+          })
+            .then(res => {
+              if (res.ok) return res.json()
+              return res.json().then(json => Promise.reject(json))
+            })
+            .then(({ id }) => {
+              return id
+            })
+            .catch(e => {
+              console.error(e.error)
+            })
+        },
+        // when the order has been approved, allow the user to confirm the order 
+        // by clicking a confirm button
+        onApprove: function (data, actions) {
+
+          return actions.order.get().then(function (orderDetails) {
+
+            // display the order details, and order button
+            document.getElementById("order_details").style = "display: block";
+            document.getElementById("detail_display").innerHTML = JSON.stringify(orderDetails);
+
+            // if the user clicks the otder button, carry out the transaction
+            document.getElementById('confirm')
+                    .addEventListener('click', function () {
+
+                // Capture the transaction funds
+                return actions.order.capture().then(function () {
+                  // Show a confirmation to the buyer
+                  alert('Transaction complete!');
+                });
+              });
+            });
+          }
+
+        })
+      .render("#paypal")
+    });
+  </script>
+</head>
+<body>
+  <div id="paypal"></div>
+  <div id="order_details">
+    <div id="detail_display"></div>
+    <button id="confirm">Confirm</button>
+  </div>
+</body>
+</html>

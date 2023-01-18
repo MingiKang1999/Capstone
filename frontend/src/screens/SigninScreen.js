@@ -4,8 +4,9 @@ import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import { Helmet } from "react-helmet-async";
 import Button from "react-bootstrap/Button";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Store } from "../Store";
+import { toast } from "react-toastify";
 
 export default function SigninScreen(){
     const navigate = useNavigate();
@@ -16,7 +17,8 @@ export default function SigninScreen(){
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    const {dispatch: ctxDispatch } = useContext(Store);
+    const {state, dispatch: ctxDispatch } = useContext(Store);
+    const {userInfo} = state;
     
     const submitHandler = async (e) => {
         e.preventDefault();
@@ -29,9 +31,15 @@ export default function SigninScreen(){
             localStorage.setItem("userInfo", JSON.stringify(data));
             navigate(redirect || "/");
         }catch (err){
-            alert("Invalid Email or Password")
+            toast.error("Invalid Email or Password")
         }
-    }
+    };
+
+    useEffect(() => {
+        if (userInfo) {
+            navigate(redirect);
+        }
+    }, [navigate, redirect, userInfo]);
     
     return (
         <Container className="small-container">
@@ -56,7 +64,7 @@ export default function SigninScreen(){
                 </div>
                 <div className="mb-3">
                     New User?{" "}
-                    <Link to={`signup?redirect=${redirect}`}>Create New Account</Link>
+                    <Link to={`/signup?redirect=${redirect}`}>Create New Account</Link>
                 </div>
             </Form>
         </Container>

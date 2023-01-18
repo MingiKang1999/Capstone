@@ -53,6 +53,76 @@ mongoose.connect(process.env.db_connection_string).then(() => {
     console.log(err);
 })
 
+// require the paypal Checkout API SDK
+const paypal = require("@paypal/checkout-server-sdk")
+
+// client ID an secret are needed to access the API
+let clientId = "Af0lPYWdv7lYTtUb3x70dVGzSVxFdY5wucWhLCAmpwv-G-iF5AISJWuolmbsQgT8_XyTDM1oay18MQAE";
+let clientSecret = "EB6UmGqBqjUDsMeW_5vqDv7BYMppyfuWhnjQFT2NxpjrWkovJ9oHyYb22QqTtiB9y0RarthyQb4kjBRO";
+
+// Need to create an "environment" with these credentails and give them to the 
+// Paypal Checkout API SDK
+let environment = new paypal.core.SandboxEnvironment(clientId, clientSecret);
+let paypalClient = new paypal.core.PayPalHttpClient(environment);
+
+// send back index.html at the root route
+app.get("/", (req, res) => {
+  res.sendFile(__dirname + "/index.html");
+})
+
+app.post("/create-order", async (req, res) => {
+
+  const request = new paypal.orders.OrdersCreateRequest();
+
+  request.prefer("return=representation")
+  request.requestBody({
+    intent: "CAPTURE",
+    purchase_units: [
+      {
+        amount: {
+          currency_code: "CAD",
+          value: 761.62,
+          breakdown: {
+            item_total: {
+              currency_code: "CAD",
+              value: 761.62,
+            },
+          },
+        },
+
+        items: [
+          {name: "Beach",
+           unit_amount: {
+             currency_code: "CAD",
+             value: 224
+           },
+          quantity: 1},
+          {name: "BirdFly",
+           unit_amount: {
+             currency_code: "CAD",
+             value: 400
+           },
+          quantity: 1},
+          {name: "BirdTree",
+          unit_amount: {
+            currency_code: "CAD",
+            value: 50
+          },
+         quantity: 1},     
+        ],
+      },
+    ],
+  })
+
+  try {
+    const order = await paypalClient.execute(request)
+    console.log(order.result);
+    res.json({ id: order.result.id })
+  } catch (e) {
+    res.status(500).json({ error: e.message })
+  }
+})
+
 app.listen(process.env.PORT || 5000, ()=>{
     console.log(api);
     console.log('server is running http://localhost:5000');

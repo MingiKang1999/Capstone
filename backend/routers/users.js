@@ -64,7 +64,7 @@ router.post("/login", expressAsyncHandler (async(req, res) => {
                 {expiresIn: "1d"}
             )
 
-            res.send({user: user.email, token: token});
+            res.send({user: user.email, token: token, firstName: user.firstName, lastName: user.lastName, address: user.address, adminCheck: user.adminCheck});
             return;
         }else{
             res.status(400).send("Incorrect Password Entered");
@@ -73,6 +73,7 @@ router.post("/login", expressAsyncHandler (async(req, res) => {
 }))
 
 router.post("/register", async (req, res) =>{
+    const secret = process.env.secret;
     let user = new User({
         firstName: req.body.firstName,
         lastName: req.body.lastName,
@@ -84,11 +85,17 @@ router.post("/register", async (req, res) =>{
     })
     user = await user.save();
 
+    res.send({user: user.email, token: jwt.sign(
+        {
+            userId: user.id,
+            adminCheck: user.adminCheck
+        },
+        secret,
+        {expiresIn: "1d"}
+    ), firstName: user.firstName, lastName: user.lastName, address: user.address, adminCheck: user.adminCheck});
     if (!user){
         return res.status(404).send("The creation of User was not successful");
     }
-
-    res.send(user);
 })
 
 router.get(`/get/count`, async (req, res) => {
@@ -114,5 +121,30 @@ router.delete("/:userId", async (req, res) => {
         return res.status(400).json({success: false, error: error});
     })
 })
+
+router.put("/update", expressAsyncHandler(async (req, res) => {
+    const user = await User.findOne({email: req.body.email});
+    if (user){
+        user.firstName = req.body.firstName || user.firstName;
+        user.lastName = req.body.lastName || user.lastName;
+        user.userName = req.body.userName || user.userName;
+        if (req.body.password) {
+            user.password = bcrypt.hashSync(req.body.password, 5);
+        }
+        user.email = req.body.user || user.email;
+        user.address = req.body.address || user.address;
+
+        const updatedUser = await user.save();
+        res.send({
+            firstName: updatedUser.firstName,
+            lastName: updatedUser.lastName,
+            userName: updatedUser.userName,
+            email: updatedUser.email,
+            address: updatedUser.address,
+        })
+    } else {
+        res.status(404).send({message:"User does not exist"})
+    }
+}))
 
 module.exports = router;

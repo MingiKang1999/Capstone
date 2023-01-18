@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/MingiKang1999/Capstone#readme",
   "dependencies": {
+    "@paypal/checkout-server-sdk": "^1.0.3",
     "express-async-handler": "^1.2.0"
   }
 }

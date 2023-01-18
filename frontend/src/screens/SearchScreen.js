@@ -1,5 +1,6 @@
+import React from 'react'
 import { useContext, useEffect, useReducer } from "react";
-import {useParams, useNavigate} from "react-router-dom";
+import {useNavigate, useLocation} from "react-router-dom";
 import axios from "axios";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -27,11 +28,11 @@ const reducer = (state, action) => {
 }
 
 
-function ProductScreen(){
+function SearchScreen(){
     const navigate = useNavigate();
-    const params = useParams();
-    const {slug} = params;
-    console.log(slug);
+    const { search } = useLocation();
+    const sp = new URLSearchParams(search);
+    const query = sp.get('query') || 'all';
     const [{loading, error, product}, dispatch] = useReducer((reducer), {
         product: [], loading: true, error: ""
     });
@@ -40,14 +41,14 @@ function ProductScreen(){
         const fetchData = async () => {
             dispatch({type: "FETCH_REQUEST"});
             try{
-                const result = await axios.get(`/api/v1/products/${slug}`);
+                const result = await axios.get(`/api/v1/products/${query}`);
                 dispatch({type: "FETCH_SUCCESS", payload: result.data})
             }catch(err){
                 dispatch({type: "FETCH_FAIL", payload: getError(err)});
             }
         };
         fetchData();
-    }, [slug]);
+    }, [query]);
     const {dispatch: ctxDispatch} = useContext(Store);
     
     const addToCartHandler = () => {
@@ -124,4 +125,4 @@ function ProductScreen(){
     )
 }
 
-export default ProductScreen;
+export default SearchScreen;
