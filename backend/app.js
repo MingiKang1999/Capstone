@@ -81,34 +81,28 @@ app.post("/create-order", async (req, res) => {
       {
         amount: {
           currency_code: "CAD",
-          value: 761.62,
+          value: 136,
           breakdown: {
             item_total: {
               currency_code: "CAD",
-              value: 761.62,
+              value: 136,
             },
           },
         },
 
         items: [
-          {name: "Beach",
+          {name: "Shoes",
            unit_amount: {
              currency_code: "CAD",
-             value: 224
+             value: 120
            },
           quantity: 1},
-          {name: "BirdFly",
+          {name: "Socks",
            unit_amount: {
              currency_code: "CAD",
-             value: 400
+             value: 2
            },
-          quantity: 1},
-          {name: "BirdTree",
-          unit_amount: {
-            currency_code: "CAD",
-            value: 50
-          },
-         quantity: 1},     
+          quantity: 8},          
         ],
       },
     ],
