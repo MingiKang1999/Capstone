@@ -25,6 +25,8 @@ import { getError } from "./utils";
 import axios from "axios";
 import SearchBox from "./components/SearchBox";
 import SearchScreen from "./screens/SearchScreen";
+import DiscussionScreen from "./screens/DiscussionScreen";
+import PostScreen from "./screens/PostScreen";
 
 function App() {
   const {state, dispatch: ctxDispatch } = useContext(Store);
@@ -133,6 +135,7 @@ useEffect(() => {
         <Container className="mt-3">
           <Routes>
             <Route path="/product/:slug" element={<ProductScreen/>}/>
+            <Route path="/discussion/:slug" element={<PostScreen/>}/>
             <Route path="/cart" element={<CartScreen/>}/>
             <Route path="/search" element={<SearchScreen/>}/>
             <Route path="/signin" element={<SigninScreen/>}/>
@@ -143,6 +146,7 @@ useEffect(() => {
             <Route path="/profile" element={<ProfileScreen/>}/>
             <Route path="/admin_product" element={<AdminProductScreen/>}/>
             <Route path="/about" element={<AboutScreen/>}/>
+            <Route path="/discussion" element={<DiscussionScreen/>}/>
             <Route path="/" element={<HomeScreen/>}/>
           </Routes>
         </Container>

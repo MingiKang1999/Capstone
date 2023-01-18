@@ -22,6 +22,7 @@ const productRouter = require("./routers/products");
 const usersRouter = require('./routers/users');
 const cartsRouter = require('./routers/carts');
 const categoriesRouter = require('./routers/categories');
+const discussionsRouter = require('./routers/discussions');
 
 //Middleware
 app.use(bodyParser.json());
@@ -40,6 +41,7 @@ app.use(`${api}/products`, productRouter);
 app.use(`${api}/users`, usersRouter);
 app.use(`${api}/carts`, cartsRouter);
 app.use(`${api}/categories`, categoriesRouter);
+app.use(`${api}/discussions`, discussionsRouter);
 
 __dirname = path.resolve();
 app.use(express.static(path.join(__dirname, "/frontend/build")));
