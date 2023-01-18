@@ -73,6 +73,9 @@ useEffect(() => {
                 Cart Items:
                 {cart.cartItems.length > 0 && (cart.cartItems.length)}
               </Link>
+              <Link to="/discussion" className="nav-link">
+                Discussion
+              </Link>
               <SearchBox/>
               {userInfo ? (
                 <NavDropdown title={userInfo.user} id="basic-nav-dropdown">
